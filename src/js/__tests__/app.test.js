@@ -1,70 +1,11 @@
-import Team from '../app';
+import ErrorRepository from '../app';
 
-test('проверка add', () => {
-  const team = new Team([{
-    name: 'Вася', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Петя', type: 'Bowman', attack: 20, defence: 40,
-  }]);
-  team.add({
-    name: 'Саша', type: 'Bowman', attack: 20, defence: 40,
-  });
-
-  expect(Array.from(team.members)).toEqual([{
-    name: 'Вася', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Петя', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Саша', type: 'Bowman', attack: 20, defence: 40,
-  }]);
+test('проверка error', () => {
+  const errorRepository = new ErrorRepository(404, 'Страница не найдена');
+  expect(errorRepository.translate(405)).toEqual('Unknown error');
 });
 
-test('проверка add error', () => {
-  const team = new Team([{
-    name: 'Вася', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Петя', type: 'Bowman', attack: 20, defence: 40,
-  }]);
-
-  expect(team.add({
-    name: 'Вася', type: 'Bowman', attack: 20, defence: 40,
-  })).toThrow();
-});
-
-test('проверка addAll', () => {
-  const team = new Team([{
-    name: 'Вася', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Петя', type: 'Bowman', attack: 20, defence: 40,
-  }]);
-
-  team.addAll({
-    name: 'Паша', type: 'Bowman', attack: 20, defence: 40,
-  },
-  {
-    name: 'Маша', type: 'Bowman', attack: 20, defence: 40,
-  });
-  expect(Array.from(team.members)).toEqual([{
-    name: 'Вася', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Петя', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Паша', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Маша', type: 'Bowman', attack: 20, defence: 40,
-  }]);
-});
-
-test('проверка toArray', () => {
-  const team = new Team([{
-    name: 'Вася', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Петя', type: 'Bowman', attack: 20, defence: 40,
-  }]);
-
-  expect(team.toArray()).toEqual([{
-    name: 'Вася', type: 'Bowman', attack: 20, defence: 40,
-  }, {
-    name: 'Петя', type: 'Bowman', attack: 20, defence: 40,
-  }]);
+test('проверка true', () => {
+  const errorRepository = new ErrorRepository(404, 'Страница не найдена');
+  expect(errorRepository.translate(404)).toEqual('Страница не найдена');
 });
